@@ -18,6 +18,9 @@ public class BitBayStock extends AbstractStockExchange {
 
     double getExchangePrice(Currency a, Currency b) throws IOException {
         GET_URL += a.name() + "-" + b.name();
-        return Double.valueOf((String) super.getExchangePrice(GET_URL, a, b));
+        //.out.println(GET_URL);
+        JSONObject obj1 = new JSONObject(String.valueOf(super.getExchangePrice(GET_URL, a, b)));
+        //System.out.println(obj1.toString());
+        return Double.valueOf((String) obj1.getJSONObject("ticker").get("rate"));
     }
 }

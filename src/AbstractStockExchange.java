@@ -31,12 +31,14 @@ public abstract class AbstractStockExchange implements StockExchange {
             in.close();
             System.out.println(response.toString());
 
+            return response;
 
-            JSONObject obj1 = new JSONObject(response.toString());
-            JSONObject resp = obj1.getJSONObject("ticker");
+
+            //JSONObject obj1 = new JSONObject(response.toString());
+            // resp = obj1.getJSONObject("ticker");
 
             //System.out.println(resp.get("rate"));
-            return  resp.get("rate");
+            //return  resp.get("rate");
 
         } else {
             System.out.println("GET request not worked");
