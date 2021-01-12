@@ -27,11 +27,11 @@ public class Test {
         Currency a = Currency.ETH;
         Currency b = Currency.BTC;
 
-        System.out.println("Bitbay: " + bb.getExchangePrice(a, b));
-        System.out.println("Binance: " + bn.getExchangePrice(a, b));
-        System.out.println("Coinbase: " + cb.getExchangePrice(a, b));
-        System.out.println("Cexio: " + g.getExchangePrice(a, b));
-        System.out.println("Gemini: " + gm.getExchangePrice(a, b));
+        //System.out.println("Bitbay: " + bb.getExchangePrice(a, b));
+       // //System.out.println("Binance: " + bn.getExchangePrice(a, b));
+        //System.out.println("Coinbase: " + cb.getExchangePrice(a, b));
+        //System.out.println("Cexio: " + g.getExchangePrice(a, b));
+        //System.out.println("Gemini: " + gm.getExchangePrice(a, b));
 
         //sendGET();
         System.out.println("GET DONE");
