@@ -68,7 +68,7 @@ public class BinanceStock extends AbstractStockExchange {
         exchangePairsList = this.getAllPairs();
         String[] pairs =  exchangePairsList.toArray(new String[exchangePairsList.size()]);
 
-
+        //TODO
         Arrays.sort(currencies);
         Arrays.sort(pairs);
         ArrayList<String[]> list = new ArrayList<>();

@@ -31,7 +31,7 @@ public class CoinbaseStock extends AbstractStockExchange {
     }
 
     public String getExchangePrice(String a, String b) throws IOException {
-        GET_URL += a;
+        //GET_URL += a;
         JSONObject obj1 = new JSONObject(String.valueOf(super.getExchangePriceObject(GET_URL, a, b)));
         //System.out.println(obj1.toString());
         return String.valueOf(obj1.getJSONObject("data").getJSONObject("rates").get(b));
@@ -78,7 +78,7 @@ public class CoinbaseStock extends AbstractStockExchange {
                 row[2] = String.valueOf(infoList.get(key));
                 list.add(row);
             }
-            
+
         return list;
 
     }
