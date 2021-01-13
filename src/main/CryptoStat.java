@@ -21,7 +21,7 @@ public class CryptoStat {
         createStocks();
         System.out.println("Hello CryptoStat");
         MainWindow mainWindow = new MainWindow();
-        mainWindow.addPanel("Stocks Data", new DataPanel(stocks, mainWindow));
+        mainWindow.addPanel("Markets Data", new DataPanel(stocks, mainWindow));
     }
 
         

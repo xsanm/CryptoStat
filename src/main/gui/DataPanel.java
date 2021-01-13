@@ -37,7 +37,7 @@ public class DataPanel extends JPanel {
 
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        JLabel title = new JLabel("Exchange Stocks and stats");
+        JLabel title = new JLabel("Stocks markets");
         this.add(title);
 
         this.stocks = stocks;
