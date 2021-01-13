@@ -1,12 +1,15 @@
 package objects;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
 
 public interface StockExchange {
-    Object getExchangePrice(String GET_URL, String a, String b) throws IOException;
+    JSONObject getExchangePriceObject(String GET_URL, String a, String b) throws IOException;
+    public String getExchangePrice(String a, String b) throws IOException;
     String getStockName();
-    Set<String> getAllCurrencies() throws IOException;
-    ArrayList<String> getAllPairs() throws IOException;
+    ArrayList<String> getAllCurrencies() ;
+    ArrayList<String> getAllPairs() ;
+    ArrayList<String[]> generateExchangeTable(String base);
 }

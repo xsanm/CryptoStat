@@ -1,6 +1,7 @@
 package gui;
 
 import com.sun.tools.javac.Main;
+import objects.AbstractStockExchange;
 import objects.StockExchange;
 import stock.BinanceStock;
 
@@ -21,10 +22,16 @@ import java.util.Set;
 public class DataPanel extends JPanel {
 
     ArrayList<StockExchange> stocks = new ArrayList<>();
-    Set<String> allCurencies;
+    StockExchange choosedStock;
+    ArrayList<String> currenciesList;
+    //ArrayList<String> pairsList;
     String[] currencies;
-    ArrayList<String> pairs;
+    //String[] pairs;
     MainWindow mainWindow;
+    JTable table;
+    JPanel cbPanel = new JPanel();
+    JPanel tPanel = new JPanel();
+
 
     public DataPanel(ArrayList<StockExchange> stocks, MainWindow m) {
 
@@ -32,6 +39,7 @@ public class DataPanel extends JPanel {
 
         JLabel title = new JLabel("Exchange Stocks and stats");
         this.add(title);
+
         this.stocks = stocks;
         System.out.println(stocks);
         mainWindow = m;
@@ -54,89 +62,85 @@ public class DataPanel extends JPanel {
         }
         this.add(buttonPanel);
 
+        this.add(new JLabel("Select base currency"));
+
 
     }
 
     private void chooseStock(StockExchange se) {
+        choosedStock = se;
+        currenciesList = se.getAllCurrencies();
+        currencies = currenciesList.toArray(new String[currenciesList.size()]);
 
-        //System.out.println(se.getStockName());
-        try {
-            allCurencies = se.getAllCurrencies();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //pairsList = se.getAllPairs();
+        //pairs =  pairsList.toArray(new String[pairsList.size()]);
 
-        try {
-            pairs = se.getAllPairs();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        Arrays.sort(currencies);
+        //Arrays.sort(pairs);
+
+        //System.out.println(pairs);
+        //System.out.println(currencies);
 
         createComboBox();
-        System.out.println(allCurencies);
-        System.out.println(pairs);
+
     }
 
     private void createComboBox(){
-        this.add(new JLabel("Select base currency"));
-        JPanel cbPanel = new JPanel();
-        currencies =  allCurencies.toArray(new String[allCurencies.size()]);
-        Arrays.sort(currencies);
-        System.out.println(allCurencies);
-        System.out.println(currencies);
+
+        cbPanel.removeAll();
+        ///cbPanel = new JPanel();
+
         JComboBox cb = new JComboBox(currencies);
         cb.setSelectedItem("ETH");
-        createTable("ETH");
         cb.addActionListener(new ActionListener () {
             public void actionPerformed(ActionEvent e) {
                 createTable(String.valueOf(cb.getSelectedItem()));
             }
         });
+
         cbPanel.add(cb);
         this.add(cbPanel);
-
+        createTable("ETH");
         this.repaint();
         mainWindow.repaint();
 
     }
 
     private void createTable(String base) {
-        System.out.println(base);
-        JPanel tPanel = new JPanel();
+        tPanel.removeAll();
         String[] columnNames = { "Base Currency", "Dest Currency", "Value" };
-        String[][] data = new String[currencies.length][5];
-        for(int i = 0; i < currencies.length; i++) {
-            data[i][0] = base;
-            data[i][1] = currencies[i];
-            if(!pairs.contains(base + currencies[i])) continue;
+
+        ArrayList<String[]> list = choosedStock.generateExchangeTable(base);
+        /*for(int i = 0; i < currencies.length; i++) {
+
+            if(!pairsList.contains(base + currencies[i])) continue;
+
+            String[] row = new String[3];
+            row[0] = base;
+            row[1] = currencies[i];
             try {
-                data[i][2] = String.valueOf(((BinanceStock) stocks.get(0)).getExchangePrice(base, currencies[i]));
+                row[2] = String.valueOf(
+                         choosedStock.getExchangePrice(base, currencies[i])
+                );
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            list.add(row);
+        }*/
+        
+        String[][] data = new String[list.size()][5];
+        for(int i = 0; i < list.size(); i++) {
+            data[i] = list.get(i);
         }
 
-        DefaultTableModel model = new DefaultTableModel(data,columnNames);
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
-        JTable table = new JTable(model);
+        table = new JTable(model);
 
-        //table.setPreferredScrollableViewportSize(new Dimension(450,63));
-        //table.setFillsViewportHeight(true);
-        //.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        //ScrollPane pane = new JScrollPane(table);
-
-        //JScrollPane js = new JScrollPane(table);
-        //js.setVisible(true);
-        //tPanel.add(js);
-
-
-
-        //JTable j = new JTable(data, columnNames);
         tPanel.add(table);
         tPanel.add(new JScrollPane(table));
         this.add(tPanel);
-
         this.repaint();
         mainWindow.repaint();
     }

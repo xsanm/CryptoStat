@@ -1,16 +1,19 @@
 package objects;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public abstract class AbstractStockExchange implements StockExchange {
     private static final String USER_AGENT = "Mozilla/5.0";
     private static String GET_URL = "https://api.bitbay.net/rest/trading/ticker/";
-    @Override
-    public Object getExchangePrice(String GET_URL, String a, String b) throws IOException {
+
+    public JSONObject getExchangePriceObject(String GET_URL, String a, String b) throws IOException {
 
         //GET_URL += a.name() + "-" + b.name();
         URL obj = new URL(GET_URL);
@@ -18,7 +21,7 @@ public abstract class AbstractStockExchange implements StockExchange {
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", USER_AGENT);
         int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
+        //System.out.println("GET Response Code :: " + responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
@@ -29,9 +32,9 @@ public abstract class AbstractStockExchange implements StockExchange {
                 response.append(inputLine);
             }
             in.close();
-            System.out.println(response.toString());
+            //System.out.println(response.toString());
 
-            return response;
+            return new JSONObject(String.valueOf(response));
 
 
             //JSONObject obj1 = new JSONObject(response.toString());
@@ -42,9 +45,11 @@ public abstract class AbstractStockExchange implements StockExchange {
 
         } else {
             System.out.println("GET request not worked");
-            return 0.0;
+            return null;
         }
     }
+
+
 
     public Object getExchangeInfo(String GET_URL) throws IOException {
 
@@ -67,12 +72,12 @@ public abstract class AbstractStockExchange implements StockExchange {
             in.close();
             //System.out.println(response.toString());
 
-            return response;
+            return String.valueOf(response);
 
 
         } else {
             System.out.println("GET request not worked");
-            return 0.0;
+            return null;
         }
     }
 }

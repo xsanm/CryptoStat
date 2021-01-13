@@ -1,21 +1,40 @@
 package stock;
 
 import objects.AbstractStockExchange;
-import objects.Currency;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class CoinbaseStock extends AbstractStockExchange {
     private  static String GET_URL = "https://api.coinbase.com/v2/exchange-rates?currency=";
+    private ArrayList<String> currenciesList = new ArrayList<>();
+    private ArrayList<String> exchangePairs = new ArrayList<>();
+    
+    public CoinbaseStock() {
+        JSONObject exInfo = null;
+        try {
+            exInfo = new JSONObject((String) super.getExchangeInfo("https://api.coinbase.com/v2/currencies"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(exInfo);
+        JSONArray infoList = exInfo.getJSONArray("data");
+        for (int i = 0; i < infoList.length(); i++) {
+            String curr = String.valueOf(infoList.getJSONObject(i).get("id"));
+            currenciesList.add(curr);
+        }
 
-    public double getExchangePrice(String a, String b) throws IOException {
+    }
+
+    public String getExchangePrice(String a, String b) throws IOException {
         GET_URL += a;
-        JSONObject obj1 = new JSONObject(String.valueOf(super.getExchangePrice(GET_URL, a, b)));
+        JSONObject obj1 = new JSONObject(String.valueOf(super.getExchangePriceObject(GET_URL, a, b)));
         //System.out.println(obj1.toString());
-        return Double.valueOf((String) obj1.getJSONObject("data").getJSONObject("rates").get(b));
+        return String.valueOf(obj1.getJSONObject("data").getJSONObject("rates").get(b));
     }
 
     @Override
@@ -24,12 +43,43 @@ public class CoinbaseStock extends AbstractStockExchange {
     }
 
     @Override
-    public Set<String> getAllCurrencies() throws IOException {
-        return null;
+    public ArrayList<String> getAllCurrencies()  {
+        return currenciesList;
     }
 
     @Override
-    public ArrayList<String> getAllPairs() throws IOException {
-        return null;
+    public ArrayList<String> getAllPairs()  {
+        return exchangePairs;
+    }
+
+    @Override
+    public ArrayList<String[]> generateExchangeTable(String base) {
+        currenciesList = this.getAllCurrencies();
+        String[] currencies = currenciesList.toArray(new String[currenciesList.size()]);
+
+        Arrays.sort(currencies);
+        ArrayList<String[]> list = new ArrayList<>();
+
+            JSONObject exInfo = null;
+            try {
+                exInfo = new JSONObject((String) super.getExchangeInfo("https://api.coinbase.com/v2/exchange-rates?currency=" + base));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject dataList = exInfo.getJSONObject("data");
+            JSONObject infoList = dataList.getJSONObject("rates");
+            Iterator<String> keys = infoList.keys();
+            while(keys.hasNext()) {
+                String key = keys.next();
+                String[] row = new String[3];
+                row[0] = base;
+                row[1] = key;
+                row[2] = String.valueOf(infoList.get(key));
+                list.add(row);
+            }
+            
+        return list;
+
     }
 }
