@@ -1,4 +1,5 @@
 import gui.DataPanel;
+import gui.ExchangePanel;
 import gui.MainWindow;
 import objects.StockExchange;
 import stock.*;
@@ -21,6 +22,7 @@ public class CryptoStat {
         createStocks();
         System.out.println("Hello CryptoStat");
         MainWindow mainWindow = new MainWindow();
+        mainWindow.addPanel("Exchange", new ExchangePanel(stocks, mainWindow));
         mainWindow.addPanel("Markets Data", new DataPanel(stocks, mainWindow));
     }
 

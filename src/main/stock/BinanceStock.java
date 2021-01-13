@@ -37,8 +37,12 @@ public class BinanceStock extends AbstractStockExchange {
         //String x = String.valueOf(super.getExchangePrice(GET_URL + a + b, a, b));
         //System.out.println("X: " + x);
 
-        JSONObject obj1 = super.getExchangePriceObject(GET_URL + a + b, a, b);
-
+        if(!exchangePairsList.contains(a + b)) return "-";
+        JSONObject response = super.getExchangePriceObject(GET_URL + a + b, a, b);
+        if(response == null) return "-";
+    
+        JSONObject obj1 = response;
+        
         if(obj1 == null) return "-";
 
         //System.out.println(obj1.toString());

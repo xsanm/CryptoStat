@@ -41,7 +41,7 @@ public class DataPanel extends JPanel {
         this.add(title);
 
         this.stocks = stocks;
-        System.out.println(stocks);
+        //System.out.println(stocks);
         mainWindow = m;
         createButtons();
 
@@ -104,12 +104,11 @@ public class DataPanel extends JPanel {
         createTable("ETH");
         this.repaint();
         mainWindow.repaint();
-
     }
 
     private void createTable(String base) {
         tPanel.removeAll();
-        String[] columnNames = { "Base Currency", "Dest Currency", "Value" };
+        String[] columnNames = { "Base Currency", "Dest Currency", "Rate" };
 
         ArrayList<String[]> list = choosedStock.generateExchangeTable(base);
         /*for(int i = 0; i < currencies.length; i++) {

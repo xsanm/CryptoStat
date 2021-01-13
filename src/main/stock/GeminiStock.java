@@ -41,7 +41,10 @@ public class GeminiStock extends AbstractStockExchange {
 
     public String getExchangePrice(String a, String b) throws IOException {
         //GET_URL += a + b;
-        JSONObject obj1 = new JSONObject(String.valueOf(super.getExchangePriceObject(GET_URL + a + b, a, b)));
+        if(!exchangePairsList.contains(a + b)) return "-";
+        JSONObject response = super.getExchangePriceObject(GET_URL + a + b, a, b);
+        if(response == null) return "-";
+        JSONObject obj1 = new JSONObject(String.valueOf(response));
         //System.out.println(obj1.toString());
         return (String) obj1.get("bid");
     }
