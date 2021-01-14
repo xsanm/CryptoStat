@@ -1,6 +1,7 @@
 import gui.DataPanel;
 import gui.ExchangePanel;
 import gui.MainWindow;
+import gui.SymbolsPanel;
 import objects.StockExchange;
 import stock.*;
 
@@ -24,6 +25,7 @@ public class CryptoStat {
         MainWindow mainWindow = new MainWindow();
         mainWindow.addPanel("Exchange", new ExchangePanel(stocks, mainWindow));
         mainWindow.addPanel("Markets Data", new DataPanel(stocks, mainWindow));
+        mainWindow.addPanel("Symbols", new SymbolsPanel(mainWindow));
     }
 
         
