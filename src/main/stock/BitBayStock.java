@@ -98,4 +98,25 @@ public class BitBayStock extends AbstractStockExchange {
         }
         return list;
     }
+
+    public ArrayList<Double> getLastTransactions(String a, String b, int number) {
+        JSONObject exInfo = null;
+        String URL = "https://api.bitbay.net/rest/trading/transactions/" + a + "-" + b + "?limit=" + number;
+        try {
+            exInfo = new JSONObject((String) super.getExchangeInfo(URL));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<Double> res = new ArrayList<>();
+
+        JSONArray infoList = exInfo.getJSONArray("items");
+        for (int i = 0; i < infoList.length(); i++) {
+            JSONObject curr = infoList.getJSONObject(i);
+            String r = String.valueOf(curr.get("r"));
+            res.add(Double.valueOf(r));
+
+        }
+        return res;
+    }
 }

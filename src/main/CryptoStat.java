@@ -1,8 +1,7 @@
-import gui.DataPanel;
-import gui.ExchangePanel;
-import gui.MainWindow;
-import gui.SymbolsPanel;
+import gui.*;
 import objects.StockExchange;
+import plot.Plot;
+import plot.PlotWindow;
 import stock.*;
 
 import javax.swing.*;
@@ -40,7 +39,10 @@ public class CryptoStat {
     }
 
     public static void main(String[] args) {
-        
+
+        //PlotWindow pw = new PlotWindow(null, null);
+
+
         System.out.println("Hello CryptoStat");
         MainWindow mainWindow = new MainWindow();
 
@@ -49,6 +51,7 @@ public class CryptoStat {
         mainWindow.addPanel("Exchange", new ExchangePanel(stocks, mainWindow));
         mainWindow.addPanel("Markets Data", new DataPanel(stocks, mainWindow));
         mainWindow.addPanel("Symbols", new SymbolsPanel(mainWindow));
+        mainWindow.addPanel("Transaction Chart", new TransactionChartPanel(stocks));
     }
 
 

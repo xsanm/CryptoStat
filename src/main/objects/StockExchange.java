@@ -12,4 +12,6 @@ public interface StockExchange {
     ArrayList<String> getAllCurrencies() ;
     ArrayList<String> getAllPairs() ;
     ArrayList<String[]> generateExchangeTable(String base);
+
+
 }
