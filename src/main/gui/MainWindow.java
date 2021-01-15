@@ -4,12 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    JPanel jPanel = new JPanel();
     JTabbedPane tp = new JTabbedPane();
-    
 
     public MainWindow() {
-        
         this.setTitle("CryptoStat");
         this.setMinimumSize(new Dimension(800, 800));
         this.add(tp);
@@ -21,5 +18,4 @@ public class MainWindow extends JFrame {
         tp.add(name_, o);
     }
 
-    
 }

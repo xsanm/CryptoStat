@@ -17,45 +17,38 @@ import java.util.Iterator;
 public class SymbolsPanel extends JPanel {
     MainWindow mainWindow;
     JTable table;
-    JPanel cbPanel = new JPanel();
     JPanel tPanel = new JPanel();
     ArrayList<String[]> list;
 
     public SymbolsPanel(MainWindow m) {
         mainWindow = m;
+
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         JLabel title = new JLabel("All available crypto symbols from around the world");
         this.add(title);
 
-
         JPanel pn = new JPanel();
-        //.pn.setLayout(new BoxLayout(pn, BoxLayout.PAGE_AXIS));
         pn.add(new JLabel("Find Symbol"));
 
         JTextField jb = new JTextField(10);
         pn.add(jb);
 
-
         JButton btn = new JButton("Find");
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 findSymbole(jb.getText().toUpperCase());
-                //findSymbole(table, 1000, 1);
             }
         });
         pn.add(btn);
         this.add(pn);
         createTable();
-
     }
 
     private void createTable() {
         tPanel.removeAll();
-        String[] columnNames = { "Symbole", "Currency Name"};
+        String[] columnNames = {"Symbole", "Currency Name"};
 
         String jsonString = null;
         try {
@@ -67,15 +60,14 @@ public class SymbolsPanel extends JPanel {
         JSONObject obj = new JSONObject(jsonString);
         Iterator<String> keys = obj.keys();
         list = new ArrayList<>();
-        while(keys.hasNext()) {
+        while (keys.hasNext()) {
             String key = keys.next();
             String[] a = {key, (String) obj.get(key)};
             list.add(a);
         }
 
-
         String[][] data = new String[list.size()][5];
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             data[i] = list.get(i);
         }
 
@@ -94,24 +86,21 @@ public class SymbolsPanel extends JPanel {
         if (!(table.getParent() instanceof JViewport)) {
             return;
         }
-
-
         int row = 1;
-        for(int i = 0; i < list.size(); i++)
-            if(list.get(i)[0].equals(curr)) {
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i)[0].equals(curr)) {
                 row = i;
             }
 
-        JViewport viewport = (JViewport)table.getParent();
+        JViewport viewport = (JViewport) table.getParent();
 
         Rectangle rect = table.getCellRect(row, 0, true);
 
         Point pt = viewport.getViewPosition();
 
-        rect.setLocation(rect.x-pt.x, rect.y-pt.y);
+        rect.setLocation(rect.x - pt.x, rect.y - pt.y);
 
         table.scrollRectToVisible(rect);
-
     }
 
 }

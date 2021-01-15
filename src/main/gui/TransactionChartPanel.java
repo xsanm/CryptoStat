@@ -1,6 +1,5 @@
 package gui;
 
-import objects.StockExchange;
 import plot.PlotWindow;
 import stock.BitBayStock;
 
@@ -10,9 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class TransactionChartPanel extends JPanel {
-
     BitBayStock stock;
-
     ArrayList<String> currencies;
     String[] pairs;
     String selectedPair = "BTC-PLN";
@@ -24,9 +21,9 @@ public class TransactionChartPanel extends JPanel {
         currencies = stock.getAllCurrencies();
         pairs = new String[pairs1.size()];
         int j = 0;
-        for(String p : pairs1) {
-            for(int i = 1; i < pairs1.size(); i++) {
-                if(currencies.contains(p.substring(0, i))){
+        for (String p : pairs1) {
+            for (int i = 1; i < pairs1.size(); i++) {
+                if (currencies.contains(p.substring(0, i))) {
                     pairs[j] = (p.substring(0, i) + "-" + p.substring(i));
                     j++;
                     break;
@@ -40,16 +37,14 @@ public class TransactionChartPanel extends JPanel {
         createButtons();
     }
 
-    private void createButtons(){
+    private void createButtons() {
         JPanel buttonPanel = new JPanel();
 
         JComboBox cb = new JComboBox(pairs);
         cb.setSelectedItem(selectedPair);
-        cb.addActionListener(new ActionListener () {
+        cb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedPair = String.valueOf(cb.getSelectedItem());
-                //showChart();
-                //showChart(String.valueOf(cb.getSelectedItem()));
             }
         });
 
@@ -57,7 +52,6 @@ public class TransactionChartPanel extends JPanel {
 
         buttonPanel.add(spin1);
         buttonPanel.add(cb);
-
 
         JButton jb = new JButton("Show Chart");
         jb.addActionListener(new ActionListener() {
@@ -69,19 +63,13 @@ public class TransactionChartPanel extends JPanel {
 
         });
         buttonPanel.add(jb);
-
         this.add(buttonPanel);
-
-
-
     }
+
     private void showChart() {
-
         int i = selectedPair.indexOf('-');
-
         ArrayList<Double> Y = stock.getLastTransactions(selectedPair.substring(0, i), selectedPair.substring(i + 1), selectedValue);
-
-        PlotWindow plotWindow = new PlotWindow(null, Y);
+        new PlotWindow(null, Y);
     }
 
 }

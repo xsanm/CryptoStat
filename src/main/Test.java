@@ -17,27 +17,6 @@ public class Test {
 
     private static final String POST_PARAMS = "userName=Pankaj";
 
-    public static void main(String[] args) throws IOException {
-        BitBayStock bb = new BitBayStock();
-        BinanceStock bn = new BinanceStock();
-        CoinbaseStock cb = new CoinbaseStock();
-        CexioStock g = new CexioStock();
-        GeminiStock gm = new GeminiStock();
-
-        Currency a = Currency.ETH;
-        Currency b = Currency.BTC;
-
-        //System.out.println("Bitbay: " + bb.getExchangePrice(a, b));
-       // //System.out.println("Binance: " + bn.getExchangePrice(a, b));
-        //System.out.println("Coinbase: " + cb.getExchangePrice(a, b));
-        //System.out.println("Cexio: " + g.getExchangePrice(a, b));
-        //System.out.println("Gemini: " + gm.getExchangePrice(a, b));
-
-        //sendGET();
-        System.out.println("GET DONE");
-        //sendPOST();
-        //ystem.out.println("POST DONE");
-    }
 
     private static void sendGET() throws IOException {
         URL obj = new URL(GET_URL);

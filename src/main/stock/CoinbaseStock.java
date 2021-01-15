@@ -10,10 +10,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class CoinbaseStock extends AbstractStockExchange {
-    private  static String GET_URL = "https://api.coinbase.com/v2/exchange-rates?currency=";
+    private static String GET_URL = "https://api.coinbase.com/v2/exchange-rates?currency=";
     private ArrayList<String> currenciesList = new ArrayList<>();
     private ArrayList<String> exchangePairs = new ArrayList<>();
-    
+
     public CoinbaseStock() {
         JSONObject exInfo = null;
         try {
@@ -21,23 +21,18 @@ public class CoinbaseStock extends AbstractStockExchange {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.out.println(exInfo);
         JSONArray infoList = exInfo.getJSONArray("data");
         for (int i = 0; i < infoList.length(); i++) {
             String curr = String.valueOf(infoList.getJSONObject(i).get("id"));
             currenciesList.add(curr);
         }
-
     }
 
     public String getExchangePrice(String a, String b) throws IOException {
-        //GET_URL += a;
-        if(!exchangePairs.contains(a + b)) return "-";
+        if (!exchangePairs.contains(a + b)) return "-";
         JSONObject response = super.getExchangePriceObject(GET_URL, a, b);
-        if(response == null) return "-";
+        if (response == null) return "-";
         JSONObject obj1 = new JSONObject(String.valueOf(response));
-        //System.out.println(obj1.toString());
-        
         return String.valueOf(obj1.getJSONObject("data").getJSONObject("rates").get(b));
     }
 
@@ -47,12 +42,12 @@ public class CoinbaseStock extends AbstractStockExchange {
     }
 
     @Override
-    public ArrayList<String> getAllCurrencies()  {
+    public ArrayList<String> getAllCurrencies() {
         return currenciesList;
     }
 
     @Override
-    public ArrayList<String> getAllPairs()  {
+    public ArrayList<String> getAllPairs() {
         return exchangePairs;
     }
 
@@ -64,26 +59,24 @@ public class CoinbaseStock extends AbstractStockExchange {
         Arrays.sort(currencies);
         ArrayList<String[]> list = new ArrayList<>();
 
-            JSONObject exInfo = null;
-            try {
-                exInfo = new JSONObject((String) super.getExchangeInfo("https://api.coinbase.com/v2/exchange-rates?currency=" + base));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        JSONObject exInfo = null;
+        try {
+            exInfo = new JSONObject((String) super.getExchangeInfo("https://api.coinbase.com/v2/exchange-rates?currency=" + base));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            JSONObject dataList = exInfo.getJSONObject("data");
-            JSONObject infoList = dataList.getJSONObject("rates");
-            Iterator<String> keys = infoList.keys();
-            while(keys.hasNext()) {
-                String key = keys.next();
-                String[] row = new String[3];
-                row[0] = base;
-                row[1] = key;
-                row[2] = String.valueOf(infoList.get(key));
-                list.add(row);
-            }
-
+        JSONObject dataList = exInfo.getJSONObject("data");
+        JSONObject infoList = dataList.getJSONObject("rates");
+        Iterator<String> keys = infoList.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            String[] row = new String[3];
+            row[0] = base;
+            row[1] = key;
+            row[2] = String.valueOf(infoList.get(key));
+            list.add(row);
+        }
         return list;
-
     }
 }

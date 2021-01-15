@@ -24,7 +24,7 @@ public class BinanceStock extends AbstractStockExchange {
         JSONArray infoList = exInfo.getJSONArray("symbols");
         for (int i = 0; i < infoList.length(); i++) {
             String curr = String.valueOf(infoList.getJSONObject(i).get("baseAsset"));
-            if(!currenciesList.contains(curr)) currenciesList.add(curr);
+            if (!currenciesList.contains(curr)) currenciesList.add(curr);
 
             String pair = String.valueOf(infoList.getJSONObject(i).get("symbol"));
             exchangePairsList.add(pair);
@@ -32,20 +32,14 @@ public class BinanceStock extends AbstractStockExchange {
     }
 
     public String getExchangePrice(String a, String b) throws IOException {
-        //GET_URL += a + b;
-        //System.out.println(GET_URL);
-        //String x = String.valueOf(super.getExchangePrice(GET_URL + a + b, a, b));
-        //System.out.println("X: " + x);
 
-        if(!exchangePairsList.contains(a + b)) return "-";
+        if (!exchangePairsList.contains(a + b)) return "-";
         JSONObject response = super.getExchangePriceObject(GET_URL + a + b, a, b);
-        if(response == null) return "-";
-    
-        JSONObject obj1 = response;
-        
-        if(obj1 == null) return "-";
+        if (response == null) return "-";
 
-        //System.out.println(obj1.toString());
+        JSONObject obj1 = response;
+        if (obj1 == null) return "-";
+
         return String.valueOf(obj1.get("price"));
     }
 
@@ -63,22 +57,22 @@ public class BinanceStock extends AbstractStockExchange {
     public ArrayList<String> getAllPairs() {
         return exchangePairsList;
     }
-    
+
 
     public ArrayList<String[]> generateExchangeTable(String base) {
         currenciesList = this.getAllCurrencies();
         String[] currencies = currenciesList.toArray(new String[currenciesList.size()]);
 
         exchangePairsList = this.getAllPairs();
-        String[] pairs =  exchangePairsList.toArray(new String[exchangePairsList.size()]);
+        String[] pairs = exchangePairsList.toArray(new String[exchangePairsList.size()]);
 
         //TODO
         Arrays.sort(currencies);
         Arrays.sort(pairs);
         ArrayList<String[]> list = new ArrayList<>();
-        for(int i = 0; i < currencies.length; i++) {
+        for (int i = 0; i < currencies.length; i++) {
 
-            if(!exchangePairsList.contains(base + currencies[i])) continue;
+            if (!exchangePairsList.contains(base + currencies[i])) continue;
 
             String[] row = new String[3];
             row[0] = base;

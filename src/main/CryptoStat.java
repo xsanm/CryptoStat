@@ -1,7 +1,5 @@
 import gui.*;
 import objects.StockExchange;
-import plot.Plot;
-import plot.PlotWindow;
 import stock.*;
 
 import javax.swing.*;
@@ -10,9 +8,7 @@ import java.util.ArrayList;
 public class CryptoStat {
 
     static ArrayList<StockExchange> stocks = new ArrayList<>();
-    MainWindow mainWindow;
 
-    
     private static void createStocks(MainWindow m) {
         JProgressBar b = new JProgressBar();
         b.setValue(0);
@@ -39,11 +35,8 @@ public class CryptoStat {
     }
 
     public static void main(String[] args) {
-
-        //PlotWindow pw = new PlotWindow(null, null);
-
-
         System.out.println("Hello CryptoStat");
+
         MainWindow mainWindow = new MainWindow();
 
         createStocks(mainWindow);
@@ -53,10 +46,6 @@ public class CryptoStat {
         mainWindow.addPanel("Symbols", new SymbolsPanel(mainWindow));
         mainWindow.addPanel("Transaction Chart", new TransactionChartPanel());
     }
-
-
-        
-
 
 
 }
