@@ -51,7 +51,7 @@ public class CryptoStat {
         mainWindow.addPanel("Exchange", new ExchangePanel(stocks, mainWindow));
         mainWindow.addPanel("Markets Data", new DataPanel(stocks, mainWindow));
         mainWindow.addPanel("Symbols", new SymbolsPanel(mainWindow));
-        mainWindow.addPanel("Transaction Chart", new TransactionChartPanel(stocks));
+        mainWindow.addPanel("Transaction Chart", new TransactionChartPanel());
     }
 
 
