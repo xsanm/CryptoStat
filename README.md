@@ -26,7 +26,7 @@ Showing echange rates and differences beetwem them in all available stocks.
 
 **Markets Data**
 
-Showing echange possibilities and rate, user need to chode base currency and Stock.
+Showing echange possibilities and rate, user need to chose base currency and Stock.
 
 ![alt text](https://github.com/xsanm/CryptoStat/blob/main/pics/markets.png)
 
