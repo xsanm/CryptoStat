@@ -20,19 +20,19 @@ However, mostly data need to be gained live, just after user interaction.
 
 **Exchange**
 
-Showing echange rates and differences beetwem them in all available stocks.
+Showing exchange rates and differences between them in all available stocks.
 
 ![alt text](https://github.com/xsanm/CryptoStat/blob/main/pics/exchange.png)
 
 **Markets Data**
 
-Showing echange possibilities and rate, user need to chose base currency and Stock.
+Showing exchange possibilities and rate, user needs to chose base currency and Stock.
 
 ![alt text](https://github.com/xsanm/CryptoStat/blob/main/pics/markets.png)
 
 **Symbols**
 
-Data about all currently available currencies sybols with searching option.
+Data about all currently available currencies symbols with searching option.
 
 ![alt text](https://github.com/xsanm/CryptoStat/blob/main/pics/symbols.png)
 
