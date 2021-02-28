@@ -2,7 +2,7 @@
 
 **What is CryptoStat?**
 
-Cryptostat allows you to gain some inforamtion about cryptocurrencies.
+CryptoStat allows you to gain some information about crypto currencies.
 
 **Information sources**
 
